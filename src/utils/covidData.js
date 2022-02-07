@@ -101,13 +101,13 @@ export const aggregateCases = (confirmedCases, recoveredCases, deathCases) => {
   const countries = Object.keys(confirmedByCountry);
 
   return countries.map((country) => {
-    const confirmed = confirmedByCountry[country].cases;
-    const recovered = recoveredByCountry[country].cases;
-    const death = deathByCountry[country].cases;
+    const confirmed = confirmedByCountry[country]?.cases || [];
+    const recovered = recoveredByCountry[country]?.cases || [];
+    const death = deathByCountry[country]?.cases || [];
 
     const cases = confirmed.map(({ date, count }, index) => {
-      const recoveredCount = recovered[index].count;
-      const deathCount = death[index].count;
+      const recoveredCount = recovered[index]?.count || 0;
+      const deathCount = death[index]?.count || 0;
 
       return {
         date,
