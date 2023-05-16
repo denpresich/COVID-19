@@ -3,13 +3,19 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { findByCountry, filterByRange } from '../../utils/covidData';
-import { getTimestamp, endOf, addDays, initDate } from '../../utils/date';
+import { getTimestamp, initDate, addDays } from '../../utils/date';
 
 import ChartOptions from '../ChartOptions';
 import Chart from '../Chart';
 
-const initialEnDate = getTimestamp(endOf(initDate()));
-const initialStartDate = getTimestamp(addDays(initialEnDate, -30));
+function getLastAvailableDate(data) {
+  const dates = data.map(({ date }) => getTimestamp(initDate(date)));
+
+  return dates.reduce(
+    (acc, date) => (date > acc ? date : acc),
+    Number.MIN_VALUE
+  );
+}
 
 const Container = styled.div`
   display: grid;
@@ -20,10 +26,6 @@ const Container = styled.div`
 `;
 
 function ChartContent({ casesByCountry, totalCases, selectedCountry }) {
-  const [options, setOptions] = React.useState({
-    range: [initialStartDate, initialEnDate],
-  });
-
   const chartData = React.useMemo(
     () =>
       selectedCountry
@@ -31,6 +33,13 @@ function ChartContent({ casesByCountry, totalCases, selectedCountry }) {
         : totalCases,
     [casesByCountry, totalCases, selectedCountry]
   );
+
+  const [options, setOptions] = React.useState({
+    range: [
+      getTimestamp(addDays(getLastAvailableDate(chartData), -30)),
+      getLastAvailableDate(chartData),
+    ],
+  });
 
   const rangeChartData = React.useMemo(
     () => filterByRange(chartData, options.range),
