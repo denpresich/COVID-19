@@ -15,7 +15,15 @@ function Handle({ value, ...props }) {
   const tooltip = formatDate(value, 'DD.MM.YYYY');
 
   return (
-    <Tooltip overlay={tooltip} visible placement="top">
+    <Tooltip
+      overlay={tooltip}
+      visible
+      placement="top"
+      overlayStyle={{
+        fontSize: 12,
+        padding: 2,
+      }}
+    >
       <RcHandle
         {...props}
         value={value}
