@@ -10,7 +10,7 @@ const colors = {
 
 const typography = {
   color: colors.white,
-  fontFamily: "'Montserrat', sans-serif",
+  fontFamily: "'Lato', sans-serif",
   fontWeight: 400,
   fontSize: '14px',
 };
