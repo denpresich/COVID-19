@@ -8,6 +8,15 @@ import { getTimestamp, initDate, addDays } from '../../utils/date';
 import ChartOptions from '../ChartOptions';
 import Chart from '../Chart';
 
+function getFirstAvailableDate(data) {
+  const dates = data.map(({ date }) => getTimestamp(initDate(date)));
+
+  return dates.reduce(
+    (acc, date) => (date < acc ? date : acc),
+    Number.MAX_VALUE
+  );
+}
+
 function getLastAvailableDate(data) {
   const dates = data.map(({ date }) => getTimestamp(initDate(date)));
 
@@ -36,7 +45,7 @@ function ChartContent({ casesByCountry, totalCases, selectedCountry }) {
 
   const [options, setOptions] = React.useState({
     range: [
-      getTimestamp(addDays(getLastAvailableDate(chartData), -30)),
+      getTimestamp(addDays(getLastAvailableDate(chartData), -90)),
       getLastAvailableDate(chartData),
     ],
   });
@@ -46,9 +55,24 @@ function ChartContent({ casesByCountry, totalCases, selectedCountry }) {
     [chartData, options.range]
   );
 
+  const startDate = React.useMemo(
+    () => getFirstAvailableDate(chartData),
+    [chartData]
+  );
+
+  const endDate = React.useMemo(
+    () => getLastAvailableDate(chartData),
+    [chartData]
+  );
+
   return (
     <Container>
-      <ChartOptions options={options} setOptions={setOptions} />
+      <ChartOptions
+        startDate={startDate}
+        endDate={endDate}
+        options={options}
+        setOptions={setOptions}
+      />
       <Chart data={rangeChartData} />
     </Container>
   );

@@ -5,7 +5,7 @@ const colors = {
   warning: '#FFC107',
   success: '#00C07F',
   failure: '#FF6562',
-  blue: '#2B4EFF',
+  blue: '#4285f4',
 };
 
 const typography = {

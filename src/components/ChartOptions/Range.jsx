@@ -12,7 +12,7 @@ import Tooltip from 'rc-tooltip';
 import { formatDate } from '../../utils/date';
 
 function Handle({ value, ...props }) {
-  const tooltip = formatDate(value, 'DD.MM');
+  const tooltip = formatDate(value, 'DD.MM.YYYY');
 
   return (
     <Tooltip overlay={tooltip} visible placement="top">
@@ -22,8 +22,9 @@ function Handle({ value, ...props }) {
         style={{
           boxShadow: 'none',
           border: 'none',
-          borderRadius: 0,
-          width: 3,
+          borderRadius: '50%',
+          width: 14,
+          backgroundColor: '#4285f4',
         }}
       />
     </Tooltip>
@@ -46,7 +47,9 @@ function Range(props) {
           height: 3,
         },
       ]}
-      handle={(handleProps) => <Handle {...handleProps} />}
+      handle={(handleProps) => (
+        <Handle key={`range-handle-${handleProps.value}`} {...handleProps} />
+      )}
     />
   );
 }

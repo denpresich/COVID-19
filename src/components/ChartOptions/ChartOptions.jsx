@@ -3,29 +3,28 @@ import PropTypes from 'prop-types';
 
 import { DAY } from '../../constants/date';
 
-import { getTimestamp, endOf, initDate, formatDate } from '../../utils/date';
+import { formatDate } from '../../utils/date';
 
 import Range from './Range';
 
-const startDate = getTimestamp(endOf('01/22/20', 'day'));
-const endDate = getTimestamp(endOf(initDate()));
-
-function ChartOptions({ options, setOptions }) {
+function ChartOptions({ startDate, endDate, options, setOptions }) {
   return (
     <Range
       min={startDate}
       max={endDate}
-      step={DAY * 10}
+      step={DAY}
       value={options.range}
       onChange={(range) => setOptions({ ...options, range })}
       pushable={false}
       allowCross={false}
-      formatTooltip={(value) => formatDate(value, 'DD.MM')}
+      formatTooltip={(value) => formatDate(value, 'DD.MM.YYYY')}
     />
   );
 }
 
 ChartOptions.propTypes = {
+  startDate: PropTypes.number.isRequired,
+  endDate: PropTypes.number.isRequired,
   options: PropTypes.shape({
     range: PropTypes.arrayOf(PropTypes.number).isRequired,
   }).isRequired,
