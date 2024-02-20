@@ -7,6 +7,7 @@ import { getTimestamp, initDate, addDays } from '../../utils/date';
 
 import ChartOptions from '../ChartOptions';
 import Chart from '../Chart';
+import Alert from '../Alert';
 
 function getFirstAvailableDate(data) {
   const dates = data.map(({ date }) => getTimestamp(initDate(date)));
@@ -28,10 +29,11 @@ function getLastAvailableDate(data) {
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 1fr 7fr;
+  grid-template-rows: auto auto 7fr;
+  gap: 48px;
   width: 100%;
   height: 100%;
-  padding: 64px 32px;
+  padding: 32px;
 `;
 
 function ChartContent({ casesByCountry, totalCases, selectedCountry }) {
@@ -67,6 +69,11 @@ function ChartContent({ casesByCountry, totalCases, selectedCountry }) {
 
   return (
     <Container>
+      <Alert>
+        <b>March 10, 2023:</b> The COVID-19 chart is no longer updating after
+        the cease of the data collection and reporting of global COVID-19 data
+        by Johns Hopkins Coronavirus Resource Center
+      </Alert>
       <ChartOptions
         startDate={startDate}
         endDate={endDate}
