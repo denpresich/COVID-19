@@ -40,6 +40,7 @@ export default function Dashboard() {
         casesByCountry={data.byCountry}
         totalCases={data.total}
         selectedCountry={selectedCountry}
+        resetSelectedCountry={() => setSelectedCountry(null)}
       />
     </Container>
   );
