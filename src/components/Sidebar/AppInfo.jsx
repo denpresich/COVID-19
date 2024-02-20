@@ -16,8 +16,10 @@ const StyledTypography = styled(Typography)`
 `;
 
 const Link = styled.a`
-  :visited {
-    color: inherit;
+  color: #4285f4;
+  text-decoration: none;
+  :hover {
+    text-decoration: underline;
   }
 `;
 
